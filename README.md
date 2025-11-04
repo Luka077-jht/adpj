@@ -1,76 +1,98 @@
-# 🎬 怪奇物语角色评分系统
+# ⚔️ 黑暗荣耀角色评分系统
 
-一个基于Streamlit的怪奇物语角色评分应用，采用虎扑风格设计，提供角色深度分析、演员信息和热评梗概。
+基于Streamlit开发的黑暗荣耀角色评分应用，采用虎扑风格设计，支持角色评分、AI分析和演员信息查看。
 
-## 🌟 功能特色
+## 🚀 功能特色
 
-- **五星评分系统** - 专业的角色评分功能
-- **角色深度分析** - 包含MBTI性格分析和角色描述
-- **演员信息展示** - 完整的演员资料和代表作品
-- **热评梗概** - 收集了粉丝对各个角色的热门评论
-- **虎扑风格UI** - 采用虎扑社区的设计风格
+- **🎯 角色评分** - 五星评分系统，支持实时统计
+- **🔮 AI角色分析** - 深度解析角色性格和剧情作用
+- **🎭 演员信息** - 查看演员演艺生涯和代表作品
+- **📊 实时统计** - 动态显示评分数据和排行榜
+- **🔥 虎扑热评** - 角色相关的梗和热门评论
 
-## 🚀 快速开始
+## 🛠️ 技术栈
+
+- **前端框架**: Streamlit
+- **数据处理**: Pandas, NumPy
+- **界面设计**: 自定义CSS + 响应式布局
+- **部署方式**: Streamlit Cloud / GitHub Pages
+
+## 📦 安装运行
 
 ### 环境要求
-
 - Python 3.8+
-- Streamlit
-- Pandas
-- NumPy
+- Streamlit 1.28.0+
 
 ### 安装依赖
-
 ```bash
 pip install -r requirements.txt
 ```
 
 ### 运行应用
-
 ```bash
 streamlit run app.py
 ```
 
+## 🎮 使用说明
+
+### 1. 角色评分
+- 浏览黑暗荣耀主要角色信息
+- 使用五星评分系统为角色打分
+- 查看实时统计和排行榜
+
+### 2. AI角色分析
+- 选择角色和分析维度
+- 获取AI生成的深度解析报告
+- 查看角色和演员相关图片
+
+### 3. 演员信息
+- 查看演员详细资料
+- 浏览代表作品信息
+- 了解演艺生涯发展
+
 ## 📁 项目结构
 
 ```
-stranger-things-rating/
-├── app.py              # 主应用文件
-├── requirements.txt    # Python依赖包
-└── README.md          # 项目说明文档
+黑暗荣耀角色评分/
+├── app.py                 # 主应用文件
+├── requirements.txt       # 依赖包列表
+├── README.md             # 项目说明文档
+└── images/               # 图片资源目录
+    ├── characters/       # 角色图片
+    ├── actors/          # 演员照片
+    └── works/           # 作品海报
 ```
 
-## 🎯 角色列表
+## 🌐 在线部署
 
-应用包含以下8个主要角色：
+### Streamlit Cloud部署
+1. 将代码推送到GitHub仓库
+2. 访问 [Streamlit Cloud](https://share.streamlit.io/)
+3. 连接GitHub仓库并部署应用
 
-1. **Eleven** - 超能力女孩 (Millie Bobby Brown)
-2. **Mike Wheeler** - 团队领袖 (Finn Wolfhard)
-3. **Will Byers** - 失踪男孩 (Noah Schnapp)
-4. **Dustin Henderson** - 科学天才 (Gaten Matarazzo)
-5. **Lucas Sinclair** - 怀疑论者 (Caleb McLaughlin)
-6. **Max Mayfield** - 新成员 (Sadie Sink)
-7. **Steve Harrington** - 前恶霸 (Joe Keery)
-8. **Jim Hopper** - 警长 (David Harbour)
+### GitHub Pages部署
+1. 构建静态版本
+2. 启用GitHub Pages
+3. 配置自定义域名（可选）
 
-## 🎨 界面特色
+## 📊 数据说明
 
-- **响应式设计** - 适配不同屏幕尺寸
-- **渐变色彩** - 采用怪奇物语主题的红色系渐变
-- **卡片式布局** - 信息展示清晰有序
-- **动画效果** - 悬停和交互动画
+应用包含6个主要角色数据：
+- 文东恩（宋慧乔 饰）
+- 朴妍珍（林智妍 饰）
+- 周汝正（李到晛 饰）
+- 全在俊（朴成焄 饰）
+- 李莎拉（金赫拉 饰）
+- 崔惠程（车珠英 饰）
 
-## 📊 数据来源
+## 🤝 贡献指南
 
-- 角色图片来自维基百科和官方剧照
-- 演员照片使用官方宣传照
-- 评分数据基于粉丝社区统计
-- MBTI分析基于角色性格特征
-
-## 🤝 贡献
-
-欢迎提交Issue和Pull Request来改进这个项目！
+欢迎提交Issue和Pull Request来改进项目！
 
 ## 📄 许可证
 
 MIT License
+
+## 📞 联系方式
+
+如有问题或建议，请通过GitHub Issues联系我们。

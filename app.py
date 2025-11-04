@@ -11,12 +11,12 @@ import os
 
 # 页面配置
 st.set_page_config(
-    page_title="🎬 怪奇物语角色评分 - 虎扑风格",
-    page_icon="🔮",
+    page_title="🎬 黑暗荣耀角色评分 - 虎扑风格",
+    page_icon="⚔️",
     layout="wide"
 )
 
-# 自定义CSS样式 - 保持黑暗荣耀文件的风格
+# 自定义CSS样式 - 保持66.7%文件的风格
 st.markdown("""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
@@ -25,7 +25,7 @@ st.markdown("""
         font-family: 'Noto Sans SC', sans-serif;
         font-size: 3rem;
         font-weight: 700;
-        background: linear-gradient(45deg, #8B0000, #B22222, #DC143C, #FF4500);
+        background: linear-gradient(45deg, #1E3C72, #2A5298, #667EEA, #764BA2);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         text-align: center;
@@ -42,7 +42,7 @@ st.markdown("""
         border-radius: 15px;
         padding: 1.5rem;
         margin: 1rem 0;
-        border-left: 4px solid #8B0000;
+        border-left: 4px solid #1E3C72;
         transition: all 0.3s ease;
     }
     .character-card:hover {
@@ -50,7 +50,7 @@ st.markdown("""
         box-shadow: 0 10px 25px rgba(0,0,0,0.1);
     }
     .rating-section {
-        background: linear-gradient(135deg, #8B0000 0%, #B22222 100%);
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         padding: 2rem;
         border-radius: 15px;
         margin: 1rem 0;
@@ -118,7 +118,7 @@ st.markdown("""
         box-shadow: 0 4px 8px rgba(255, 107, 107, 0.3);
     }
     .stat-card {
-        background: linear-gradient(135deg, #8B0000 0%, #B22222 100%);
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: #FFFFFF;
         padding: 20px;
         border-radius: 15px;
@@ -137,7 +137,7 @@ st.markdown("""
         height: 200px;
         border-radius: 15px;
         object-fit: cover;
-        border: 4px solid #8B0000;
+        border: 4px solid #1E3C72;
         margin: 0 auto;
         display: block;
         box-shadow: 0 4px 8px rgba(0,0,0,0.2);
@@ -193,280 +193,483 @@ def init_data():
     if 'characters_df' not in st.session_state:
         st.session_state.characters_df = initialize_characters()
 
-# 怪奇物语角色数据
+# 黑暗荣耀角色数据
 def initialize_characters():
     characters_data = {
-        'id': range(1, 9),
-        'name': ['Eleven', 'Mike Wheeler', 'Will Byers', 'Dustin Henderson', 'Lucas Sinclair', 'Max Mayfield', 'Steve Harrington', 'Jim Hopper'],
-        'role': ['超能力女孩', '团队领袖', '失踪男孩', '科学天才', '怀疑论者', '新成员', '前恶霸', '警长'],
+        'id': range(1, 7),
+        'name': ['文东恩', '朴妍珍', '周汝正', '全在俊', '李莎拉', '崔惠程'],
+        'role': ['女主角', '反派', '男主角', '反派', '反派', '反派'],
         'description': [
-            '拥有超能力的实验体女孩，能够用意念移动物体',
-            '团队的核心领导者，勇敢且富有责任感',
-            '被颠倒世界抓走的男孩，拥有特殊感知能力',
-            '聪明机智的科学爱好者，擅长解决问题',
-            '最初对Eleven持怀疑态度，后来成为忠实朋友',
-            '勇敢独立的滑板女孩，加入团队后展现价值',
-            '从校园恶霸成长为保护孩子们的可靠大哥',
-            '霍金斯警长，外表粗犷内心温柔的保护者'
+            '遭受校园暴力后精心策划复仇的教师',
+            '校园暴力的主导者，气象主播',
+            '帮助文东恩的整形外科医生',
+            '朴妍珍的丈夫，高尔夫球场代表',
+            '画家，校园暴力参与者',
+            '空姐，校园暴力参与者'
         ],
-        'mbti_type': ['INFJ', 'ENFJ', 'ISFP', 'ENTP', 'ISTJ', 'ESTP', 'ESFJ', 'ISTP'],
+        'mbti_type': ['INTJ', 'ESTJ', 'INFJ', 'ISTP', 'ISFP', 'ESFJ'],
         'mbti_description': [
-            'INFJ（提倡者型）：直觉敏锐，富有同情心，追求深层意义',
-            'ENFJ（主人公型）：天生的领导者，富有魅力，关心他人',
-            'ISFP（探险家型）：艺术家性格，敏感细腻，活在当下',
-            'ENTP（辩论家型）：聪明机智，好奇心强，善于创新',
-            'ISTJ（物流师型）：务实可靠，注重规则，忠诚坚定',
-            'ESTP（企业家型）：行动派，勇敢果断，适应力强',
-            'ESFJ（执政官型）：社交达人，乐于助人，保护欲强',
-            'ISTP（鉴赏家型）：实用主义者，冷静理性，行动派'
+            'INTJ（建筑师型）：战略家性格，善于长期规划，理性冷静，目标导向',
+            'ESTJ（总经理型）：务实领导者，注重规则和秩序，强势果断，追求效率',
+            'INFJ（提倡者型）：理想主义者，富有同情心，洞察力强，追求意义',
+            'ISTP（鉴赏家型）：实用主义者，冷静理性，善于解决问题，行动派',
+            'ISFP（探险家型）：艺术家性格，敏感细腻，追求美感，活在当下',
+            'ESFJ（执政官型）：社交达人，注重和谐，乐于助人，传统保守'
         ],
-        'actor_name': ['Millie Bobby Brown', 'Finn Wolfhard', 'Noah Schnapp', 'Gaten Matarazzo', 'Caleb McLaughlin', 'Sadie Sink', 'Joe Keery', 'David Harbour'],
+        'actor_name': ['宋慧乔', '林智妍', '李到晛', '朴成焄', '金赫拉', '车珠英'],
         'actor_bio': [
-            '英国女演员，因饰演Eleven一角而闻名全球，演技备受赞誉',
-            '加拿大演员兼音乐人，在怪奇物语中展现出色的表演天赋',
-            '美国演员，成功塑造了Will Byers这一复杂角色',
-            '美国演员，以独特的表演风格和幽默感深受观众喜爱',
-            '美国演员，在剧中展现了出色的舞蹈和表演才能',
-            '美国女演员，以勇敢独立的Max形象深入人心',
-            '美国演员，成功演绎了Steve从恶霸到英雄的转变',
-            '美国资深演员，演技扎实，完美诠释了警长角色'
+            '韩国著名女演员，以《浪漫满屋》《太阳的后裔》等作品闻名，演技精湛，深受观众喜爱。',
+            '韩国实力派女演员，擅长演绎复杂角色，在《黑暗荣耀》中成功塑造了令人印象深刻的反派形象。',
+            '韩国新生代男演员，演技自然细腻，在多部作品中展现出色的表演实力。',
+            '韩国资深演员，演技扎实，擅长演绎各种类型的角色，表演富有层次感。',
+            '韩国女演员，在《黑暗荣耀》中展现了出色的演技，成功塑造了李莎拉这一复杂角色。',
+            '韩国女演员，以清纯形象出道，在《黑暗荣耀》中展现了突破性的演技。'
         ],
         'famous_works': [
-            ['怪奇物语', '哥斯拉大战金刚', '福尔摩斯小姐'],
-            ['怪奇物语', '小丑回魂', '超能敢死队'],
-            ['怪奇物语', '等待安雅', '夏日友晴天'],
-            ['怪奇物语', '悲惨世界', '荣誉学生'],
-            ['怪奇物语', '具体目标', '新城市'],
-            ['怪奇物语', '恐惧街', '鲸鱼'],
-            ['怪奇物语', '蜘蛛头', '自由之声'],
-            ['怪奇物语', '黑寡妇', '地狱男爵']
+            ['太阳的后裔', '浪漫满屋', '那年冬天风在吹'],
+            ['黑暗荣耀', '人间中毒', '奸臣'],
+            ['黑暗荣耀', '再次十八岁', '忧郁症'],
+            ['黑暗荣耀', '鱿鱼游戏', '模范出租车'],
+            ['黑暗荣耀', '黑话律师', '纸钞屋'],
+            ['黑暗荣耀', '我的ID是江南美人', '顶楼']
         ],
-        'avg_rating': [9.4, 8.8, 8.6, 9.1, 8.4, 8.9, 9.2, 9.3],
-        'rating_count': [18500, 16200, 14800, 17200, 13500, 15800, 16800, 17500],
+        'avg_rating': [9.2, 8.1, 8.7, 7.8, 7.5, 7.3],
+        'rating_count': [15200, 12800, 11500, 9800, 8900, 7600],
         'image_url': [
-            # Eleven - 使用真实的怪奇物语角色图片
-            'https://upload.wikimedia.org/wikipedia/en/5/52/Eleven_%28Stranger_Things%29.jpg',
-            # Mike Wheeler - 使用真实的怪奇物语角色图片
-            'https://upload.wikimedia.org/wikipedia/en/3/38/An_image_of_the_character_Mike_Wheeler_%28portrayed_by_Finn_Wolfhard%29_from_season_3_of_the_Netflix_series_%22Stranger_Things%22.png',
-            # Will Byers - 使用真实的怪奇物语角色图片
-            'https://upload.wikimedia.org/wikipedia/en/b/b4/Will_Byers.jpg',
-            # Dustin Henderson - 使用真实的怪奇物语角色图片
-            'https://static.wikia.nocookie.net/strangerthings8338/images/0/07/Dustin_S4.png/revision/latest/scale-to-width-down/1000?cb=20220531050146',
-            # Lucas Sinclair - 使用真实的怪奇物语角色图片
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbGjQheT203HufCqDZsQ5jqjbXCpHJ4Q02Vc2YfeScm93tfgJiMbn7WosaUYfozhk3a13vt_ppIzBB-p0tBgG7SloCDTMoHE9LGQ9uG-A&s=10',
-            # Max Mayfield - 使用真实的怪奇物语角色图片
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRz60kGj9quQAfnP11SEHu_tAzjuOT5a6haneb1gF8SuTZWI95wPVjRyY_g4TvbllLPIIeUoOEEoMhNKDQtMy4QfPfJUeLP7plpTu66Mw&s',
-            # Steve Harrington - 使用真实的怪奇物语角色图片
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRP_FaefNOYhgYDGwKBGYYBIld5mGM3UEx3cP_B65eZnxzbe2xupK5i4TxfF5ouFMET_A4PJ2Ab3s8xYQRr_C-aWdklxbkVXTjXjAmzm6Q&s',
-            # Jim Hopper - 使用真实的怪奇物语角色图片
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAGoMcMYdyPH-n55mTSZ5w_2nULnyfe0az2YdwbbzM97SzP3USUnZhwFuJzyavSYfnzmU6mLtibPRwQShKmtg7a8VECZotveAEWSU89ts&s'
+            'https://via.placeholder.com/200x300/1E3C72/FFFFFF?text=文东恩',
+            'https://via.placeholder.com/200x300/2A5298/FFFFFF?text=朴妍珍',
+            'https://via.placeholder.com/200x300/667EEA/FFFFFF?text=周汝正',
+            'https://via.placeholder.com/200x300/764BA2/FFFFFF?text=全在俊',
+            'https://via.placeholder.com/200x300/FF6B6B/FFFFFF?text=李莎拉',
+            'https://via.placeholder.com/200x300/FF8E53/FFFFFF?text=崔惠程'
         ],
         'actor_photo_url': [
-            # Millie Bobby Brown - 使用真实的演员照片
-            'https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Millie_Bobby_Brown_2016.jpg/220px-Millie_Bobby_Brown_2016.jpg',
-            # Finn Wolfhard - 使用真实的演员照片
-            'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Finn_Wolfhard_by_Gage_Skidmore.jpg/220px-Finn_Wolfhard_by_Gage_Skidmore.jpg',
-            # Noah Schnapp - 使用真实的演员照片
-            'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Noah_Schnapp_by_Gage_Skidmore.jpg/220px-Noah_Schnapp_by_Gage_Skidmore.jpg',
-            # Gaten Matarazzo - 使用真实的演员照片
-            'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Gaten_Matarazzo_by_Gage_Skidmore.jpg/220px-Gaten_Matarazzo_by_Gage_Skidmore.jpg',
-            # Caleb McLaughlin - 使用真实的演员照片
-            'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Caleb_McLaughlin_by_Gage_Skidmore.jpg/220px-Caleb_McLaughlin_by_Gage_Skidmore.jpg',
-            # Sadie Sink - 使用真实的演员照片
-            'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Sadie_Sink_by_Gage_Skidmore.jpg/220px-Sadie_Sink_by_Gage_Skidmore.jpg',
-            # Joe Keery - 使用真实的演员照片
-            'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Joe_Keery_by_Gage_Skidmore.jpg/220px-Joe_Keery_by_Gage_Skidmore.jpg',
-            # David Harbour - 使用真实的演员照片
-            'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/David_Harbour_by_Gage_Skidmore.jpg/220px-David_Harbour_by_Gage_Skidmore.jpg'
+            'https://via.placeholder.com/200x300/4CAF50/FFFFFF?text=宋慧乔',
+            'https://via.placeholder.com/200x300/2196F3/FFFFFF?text=林智妍',
+            'https://via.placeholder.com/200x300/9C27B0/FFFFFF?text=李到晛',
+            'https://via.placeholder.com/200x300/FF9800/FFFFFF?text=朴成焄',
+            'https://via.placeholder.com/200x300/607D8B/FFFFFF?text=金赫拉',
+            'https://via.placeholder.com/200x300/795548/FFFFFF?text=车珠英'
         ]
     }
     return pd.DataFrame(characters_data)
 
+# 代表作品图片映射
+def get_work_images(work_name):
+    work_images = {
+        '太阳的后裔': 'https://via.placeholder.com/200x300/FF6B6B/FFFFFF?text=太阳的后裔',
+        '浪漫满屋': 'https://via.placeholder.com/200x300/4CAF50/FFFFFF?text=浪漫满屋',
+        '那年冬天风在吹': 'https://via.placeholder.com/200x300/2196F3/FFFFFF?text=那年冬天风在吹',
+        '人间中毒': 'https://via.placeholder.com/200x300/9C27B0/FFFFFF?text=人间中毒',
+        '奸臣': 'https://via.placeholder.com/200x300/FF9800/FFFFFF?text=奸臣',
+        '再次十八岁': 'https://via.placeholder.com/200x300/607D8B/FFFFFF?text=再次十八岁',
+        '忧郁症': 'https://via.placeholder.com/200x300/795548/FFFFFF?text=忧郁症',
+        '鱿鱼游戏': 'https://via.placeholder.com/200x300/1E3C72/FFFFFF?text=鱿鱼游戏',
+        '模范出租车': 'https://via.placeholder.com/200x300/2A5298/FFFFFF?text=模范出租车',
+        '黑话律师': 'https://via.placeholder.com/200x300/667EEA/FFFFFF?text=黑话律师',
+        '纸钞屋': 'https://via.placeholder.com/200x300/764BA2/FFFFFF?text=纸钞屋',
+        '我的ID是江南美人': 'https://via.placeholder.com/200x300/FF8E53/FFFFFF?text=我的ID是江南美人',
+        '顶楼': 'https://via.placeholder.com/200x300/FFD93D/FFFFFF?text=顶楼',
+        '黑暗荣耀': 'https://via.placeholder.com/200x300/1E3C72/FFFFFF?text=黑暗荣耀'
+    }
+    return work_images.get(work_name, 'https://via.placeholder.com/200x300/666666/FFFFFF?text=默认作品')
+
 # 角色相关的梗和热评
 def get_character_memes(character_id):
     memes_dict = {
-        1: ["超能力女孩", "蛋挞爱好者", "超能力觉醒", "实验室实验体"],
-        2: ["团队领袖", "勇敢担当", "Eleven的守护者", "自行车男孩"],
-        3: ["失踪男孩", "颠倒世界幸存者", "敏感感知", "Will the Wise"],
-        4: ["科学天才", "牙套男孩", "机智幽默", "Dusty-bun"],
-        5: ["怀疑论者", "弓箭手", "忠诚朋友", "Lucas the Skeptic"],
-        6: ["滑板女孩", "新成员", "勇敢独立", "Mad Max"],
-        7: ["前恶霸", "可靠大哥", "发胶男孩", "Steve the Babysitter"],
-        8: ["霍金斯警长", "父亲形象", "硬汉柔情", "Hopper the Protector"]
+        1: ["妍珍啊", "欢迎来到我的地狱", "河道英的沉默", "我需要的是刽子手"],
+        2: ["西八", "气象主播的优雅", "校园暴力的代价", "富家女的堕落"],
+        3: ["整形医生的温柔", "文东恩的守护者", "周医生的选择", "爱情与复仇之间"],
+        4: ["高尔夫球场代表", "妍珍的丈夫", "商业精英的冷漠", "上流社会的虚伪"],
+        5: ["画家的疯狂", "毒品的奴隶", "艺术家的悲剧", "校园暴力的参与者"],
+        6: ["空姐的虚荣", "校园暴力的帮凶", "美貌的代价", "底层挣扎"]
     }
     
     comments_dict = {
-        1: ["Eleven的超能力太酷了！每次看她用超能力都热血沸腾", "Millie的演技真的绝了，把Eleven的复杂情感演绎得淋漓尽致"],
-        2: ["Mike真的是个很棒的领导者，对朋友超级忠诚", "Finn把Mike的成长过程演得太真实了"],
-        3: ["Will的经历太让人心疼了，Noah的表演很有感染力", "Will the Wise这个称号真的很适合他"],
-        4: ["Dustin绝对是剧中的搞笑担当，每次出场都让人开心", "Gaten的表演太有特色了，把Dustin演活了"],
-        5: ["Lucas从怀疑到信任的转变很真实，Caleb的表演很到位", "弓箭手Lucas在关键时刻总是很可靠"],
-        6: ["Max的加入让团队更有活力，Sadie把Max的坚强演得很好", "Running Up That Hill那段真的太经典了"],
-        7: ["Steve的成长线太棒了，从恶霸到保护者，Joe演得太好了", "发胶男孩现在是最可靠的大哥"],
-        8: ["Hopper外表粗犷内心温柔，David的演技太扎实了", "警长和Eleven的父女情真的很感人"]
+        1: ["宋慧乔演技炸裂，文东恩的复仇让人心疼又解气", "从受害者到复仇者，角色的转变太精彩了"],
+        2: ["林智妍把朴妍珍演活了，让人恨得牙痒痒", "反派塑造得太成功了，每个细节都很到位"],
+        3: ["李到晛的周医生太温柔了，是黑暗中的一束光", "周汝正的选择展现了真正的人性光辉"],
+        4: ["全在俊这个角色展现了上流社会的冷漠", "演员的表演很有层次感"],
+        5: ["李莎拉的疯狂和悲剧让人印象深刻", "演员成功塑造了复杂的人物形象"],
+        6: ["崔惠程的虚荣和挣扎很真实", "空姐身份的设定很有讽刺意味"]
     }
     
-    return memes_dict.get(character_id, []), comments_dict.get(character_id, [])
+    memes = memes_dict.get(character_id, [])
+    comments = comments_dict.get(character_id, [])
+    return memes[:3], comments[:2]
 
-# 五星评分系统（使用Streamlit原生组件）
+# 五星评分系统 - 使用Streamlit原生组件
 def star_rating_component(character_id, current_rating=0):
-    # 使用Streamlit的selectbox模拟五星评分
-    rating_options = ["⭐", "⭐⭐", "⭐⭐⭐", "⭐⭐⭐⭐", "⭐⭐⭐⭐⭐"]
+    # 使用Streamlit的selectbox替代复杂的JavaScript交互
+    rating_options = ["未评分", "1星 ⭐", "2星 ⭐⭐", "3星 ⭐⭐⭐", "4星 ⭐⭐⭐⭐", "5星 ⭐⭐⭐⭐⭐"]
+    
+    # 创建唯一的key
+    rating_key = f"rating_{character_id}"
+    
+    # 显示当前评分状态
+    if current_rating > 0:
+        st.markdown(f'<div style="text-align: center; background: #4CAF50; color: white; padding: 8px; border-radius: 10px; margin: 10px 0;">您已评分: {current_rating}星</div>', unsafe_allow_html=True)
+    
+    # 使用selectbox进行评分
     selected_rating = st.selectbox(
-        "请评分：",
-        rating_options,
-        index=current_rating-1 if current_rating > 0 else 0,
-        key=f"rating_select_{character_id}"
+        "选择评分",
+        options=rating_options,
+        index=current_rating,
+        key=rating_key
     )
     
-    # 显示当前评分
-    rating_value = rating_options.index(selected_rating) + 1
-    st.write(f"当前评分：{rating_value}星")
+    # 解析评分值
+    new_rating = rating_options.index(selected_rating)
     
-    return rating_value
+    # 如果评分有变化，更新session state
+    if new_rating != current_rating and new_rating > 0:
+        st.session_state.character_ratings[character_id] = new_rating
+        st.session_state.rating_sessions += 1
+        st.success(f"✅ 已为{st.session_state.characters_df[st.session_state.characters_df['id'] == character_id]['name'].iloc[0]}评分 {new_rating}星")
+        st.rerun()
+    
+    return None
 
-# 显示角色信息
-def display_character_info(character):
-    col1, col2 = st.columns([1, 2])
+# 角色评分界面
+def character_rating_interface():
+    st.markdown('<div class="main-header">⚔️ 黑暗荣耀角色评分</div>', unsafe_allow_html=True)
+    st.markdown('<p class="sub-header">✨ 虎扑风格评分系统 · 实时统计 · 热评互动</p>', unsafe_allow_html=True)
     
-    with col1:
-        # 显示角色图片
-        st.image(character['image_url'], use_container_width=False)
-    
-    with col2:
-        st.markdown(f"### {character['name']} - {character['role']}")
-        st.markdown(f"**角色描述：** {character['description']}")
+    # 侧边栏 - 筛选器
+    with st.sidebar:
+        st.header("🔍 筛选设置")
         
-        col3, col4 = st.columns(2)
-        with col3:
-            st.markdown(f"**MBTI类型：** {character['mbti_type']}")
-            st.markdown(f"<div style='font-size: 0.9rem; color: #666;'>{character['mbti_description']}</div>", unsafe_allow_html=True)
-        with col4:
-            st.markdown(f"**平均评分：** <span class='score-highlight'>{character['avg_rating']}</span>", unsafe_allow_html=True)
-            st.markdown(f"**评分人数：** {character['rating_count']:,}")
-
-# 显示演员信息
-def display_actor_info(character):
-    st.markdown("### 🎭 演员信息")
-    
-    col1, col2 = st.columns([1, 2])
-    
-    with col1:
-        st.image(character['actor_photo_url'], use_container_width=False)
-    
-    with col2:
-        st.markdown(f"**演员姓名：** {character['actor_name']}")
-        st.markdown(f"**演员简介：** {character['actor_bio']}")
+        # 角色类型筛选
+        roles = ['全部'] + list(st.session_state.characters_df['role'].unique())
+        selected_role = st.selectbox("角色类型", roles)
         
-        st.markdown("**代表作品：**")
-        works_grid = ""
-        for work in character['famous_works']:
-            works_grid += f"<div class='work-item'>{work}</div>"
-        st.markdown(f"<div class='works-grid'>{works_grid}</div>", unsafe_allow_html=True)
-
-# 显示梗和热评
-def display_memes_and_comments(character_id):
-    memes, comments = get_character_memes(character_id)
+        # 评分范围
+        min_score, max_score = st.slider(
+            "评分范围", 
+            min_value=0.0, 
+            max_value=10.0, 
+            value=(7.0, 9.5),
+            step=0.1
+        )
+        
+        # 搜索框
+        search_term = st.text_input("🔎 搜索角色", placeholder="输入角色名或描述...")
+        
+        # 应用筛选
+        filtered_characters = st.session_state.characters_df.copy()
+        if selected_role != '全部':
+            filtered_characters = filtered_characters[filtered_characters['role'] == selected_role]
+        
+        filtered_characters = filtered_characters[
+            (filtered_characters['avg_rating'] >= min_score) & 
+            (filtered_characters['avg_rating'] <= max_score)
+        ]
+        
+        if search_term:
+            filtered_characters = filtered_characters[
+                filtered_characters['name'].str.contains(search_term, case=False) |
+                filtered_characters['description'].str.contains(search_term, case=False)
+            ]
     
-    if memes:
-        st.markdown("### 🔥 角色梗")
-        meme_tags = ""
-        for meme in memes:
-            meme_tags += f"<span class='meme-tag'>{meme}</span>"
-        st.markdown(f"<div>{meme_tags}</div>", unsafe_allow_html=True)
+    # 主内容区
+    col1, col2 = st.columns([3, 1])
     
-    if comments:
-        st.markdown("### 💬 热评")
-        for comment in comments:
-            st.markdown(f"<div class='hot-comment'>{comment}</div>", unsafe_allow_html=True)
-
-# 主应用
-def main():
-    init_data()
-    
-    # 页面标题
-    st.markdown("<h1 class='main-header'>🎬 怪奇物语角色评分系统</h1>", unsafe_allow_html=True)
-    st.markdown("<div class='sub-header'>虎扑风格 | 角色深度分析 | 演员信息 | 热评梗概</div>", unsafe_allow_html=True)
-    
-    # 统计信息
-    col1, col2, col3 = st.columns(3)
     with col1:
-        st.markdown("""
-        <div class="stat-card">
-            <h3>🎯 评分系统</h3>
-            <p>专业五星评分<br>实时数据统计</p>
-        </div>
-        """, unsafe_allow_html=True)
+        st.subheader("👥 角色评分区")
+        
+        # 排序选项
+        sort_by = st.selectbox("排序方式", ["综合评分", "评分人数", "角色名称"])
+        
+        if sort_by == "综合评分":
+            ranked_characters = filtered_characters.sort_values('avg_rating', ascending=False)
+        elif sort_by == "评分人数":
+            ranked_characters = filtered_characters.sort_values('rating_count', ascending=False)
+        else:
+            ranked_characters = filtered_characters.sort_values('name', ascending=True)
+        
+        # 角色展示和评分
+        for _, character in ranked_characters.iterrows():
+            with st.container():
+                st.markdown(f'<div class="character-card">', unsafe_allow_html=True)
+                
+                # 角色信息布局 - 优化图片和评分布局
+                col_a, col_b = st.columns([2, 3])
+                
+                with col_a:
+                    # 角色图片 - 放大到与评分框等宽
+                    st.image(character['image_url'], width='stretch', caption=character['name'])
+                    
+                    # 评分显示 - 与图片宽度对齐
+                    st.markdown(f'<div class="score-highlight" style="text-align: center; margin-top: 10px;">评分: {character["avg_rating"]}</div>', 
+                               unsafe_allow_html=True)
+                    st.markdown(f'<div style="text-align: center; font-size: 0.9rem; color: #666; margin-top: 5px;">👥 {character["rating_count"]}人评分</div>', 
+                               unsafe_allow_html=True)
+                
+                with col_b:
+                    # 角色基本信息 - 放大字体
+                    st.markdown(f"<h2 style='font-size: 1.8rem; margin-bottom: 10px;'>{character['name']}</h2>", unsafe_allow_html=True)
+                    st.markdown(f"<p style='font-size: 1.2rem; font-weight: bold; color: #1E3C72; margin-bottom: 8px;'>身份: {character['role']}</p>", unsafe_allow_html=True)
+                    st.markdown(f"<p style='font-size: 1.1rem; line-height: 1.4; margin-bottom: 15px;'>{character['description']}</p>", unsafe_allow_html=True)
+                    
+                    # 虎扑式热评和梗 - 放大字体
+                    memes, comments = get_character_memes(character['id'])
+                    
+                    if memes:
+                        st.markdown("<h4 style='font-size: 1.3rem; margin-bottom: 10px;'>🔥 角色热梗</h4>", unsafe_allow_html=True)
+                        meme_cols = st.columns(len(memes))
+                        for i, meme in enumerate(memes):
+                            with meme_cols[i]:
+                                st.markdown(f'<div class="meme-tag" style="font-size: 1rem;">{meme}</div>', unsafe_allow_html=True)
+                    
+                    # 五星评分系统 - 优化布局
+                    st.markdown("### ⭐ 为角色评分")
+                    current_user_rating = st.session_state.character_ratings.get(character['id'], 0)
+                    
+                    # 创建五星评分组件
+                    star_rating_component(character['id'], current_user_rating)
+                    
+                    # 显示热评 - 放大字体
+                    if comments:
+                        st.markdown("<h4 style='font-size: 1.3rem; margin-bottom: 10px;'>💬 虎扑热评</h4>", unsafe_allow_html=True)
+                        for comment in comments:
+                            st.markdown(f'<div class="hot-comment" style="font-size: 1.1rem; line-height: 1.4;">{comment}</div>', unsafe_allow_html=True)
+                
+                st.markdown('</div>', unsafe_allow_html=True)
+                st.write("---")
+    
     with col2:
-        st.markdown("""
-        <div class="stat-card">
-            <h3>📊 数据分析</h3>
-            <p>MBTI性格分析<br>角色深度解析</p>
-        </div>
-        """, unsafe_allow_html=True)
-    with col3:
-        st.markdown("""
-        <div class="stat-card">
-            <h3>🎭 演员信息</h3>
-            <p>完整演员资料<br>代表作品展示</p>
-        </div>
-        """, unsafe_allow_html=True)
+        st.subheader("📊 实时统计")
+        
+        # 统计卡片
+        total_characters = len(filtered_characters)
+        avg_rating = filtered_characters['avg_rating'].mean() if total_characters > 0 else 0
+        total_ratings = filtered_characters['rating_count'].sum()
+        
+        col_stat1, col_stat2 = st.columns(2)
+        
+        with col_stat1:
+            st.markdown(f'''
+            <div class="stat-card">
+                <h3>👥 角色数量</h3>
+                <div style="font-size: 1.5rem; font-weight: bold;">{total_characters}</div>
+            </div>
+            ''', unsafe_allow_html=True)
+            
+            st.markdown(f'''
+            <div class="stat-card">
+                <h3>⭐ 平均评分</h3>
+                <div style="font-size: 1.5rem; font-weight: bold;">{avg_rating:.1f}</div>
+            </div>
+            ''', unsafe_allow_html=True)
+        
+        with col_stat2:
+            st.markdown(f'''
+            <div class="stat-card">
+                <h3>📈 总评分数</h3>
+                <div style="font-size: 1.5rem; font-weight: bold;">{total_ratings:,}</div>
+            </div>
+            ''', unsafe_allow_html=True)
+            
+            user_rated_count = len(st.session_state.character_ratings)
+            st.markdown(f'''
+            <div class="stat-card">
+                <h3>🎯 我已评分</h3>
+                <div style="font-size: 1.5rem; font-weight: bold;">{user_rated_count}</div>
+            </div>
+            ''', unsafe_allow_html=True)
+        
+        # 排行榜
+        st.subheader("🏆 角色排行榜")
+        
+        for i, (_, character) in enumerate(ranked_characters.head(5).iterrows(), 1):
+            medal = "🥇" if i == 1 else "🥈" if i == 2 else "🥉" if i == 3 else f"{i}."
+            
+            st.markdown(f"<div style='font-size: 1.2rem; margin-bottom: 10px;'>{medal} <strong>{character['name']}</strong></div>", unsafe_allow_html=True)
+            st.markdown(f"<div style='font-size: 1.1rem; margin-bottom: 5px;'>  评分: <strong>{character['avg_rating']}</strong> 🌟</div>", unsafe_allow_html=True)
+            st.markdown(f"<div style='font-size: 1.1rem; margin-bottom: 5px;'>  身份: {character['role']}</div>", unsafe_allow_html=True)
+            
+            # 显示用户评分
+            user_score = st.session_state.character_ratings.get(character['id'])
+            if user_score:
+                st.markdown(f"<div style='font-size: 1.1rem; margin-bottom: 10px;'>  我的评分: <strong>{user_score}</strong> 🌟</div>", unsafe_allow_html=True)
+            
+            st.markdown("<hr style='margin: 15px 0;'>", unsafe_allow_html=True)
+
+# AI角色分析界面
+def ai_character_analysis():
+    st.markdown("## 🔮 AI角色深度解析")
+    st.markdown("### 💫 让AI帮你分析角色特点和观剧体验")
     
     # 角色选择
-    st.markdown("### 🔮 选择角色")
-    characters_df = st.session_state.characters_df
+    character_names = [char['name'] for _, char in st.session_state.characters_df.iterrows()]
+    selected_character = st.selectbox("选择要分析的角色", character_names, key="ai_character")
     
-    # 创建角色选择器
-    character_names = characters_df['name'].tolist()
-    selected_character_name = st.selectbox("请选择要评分的角色：", character_names)
+    # 获取角色数据
+    character_data = st.session_state.characters_df[st.session_state.characters_df['name'] == selected_character].iloc[0]
+    actor_name = character_data['actor_name']
+    famous_works = character_data['famous_works']
     
-    # 获取选中的角色数据
-    selected_character = characters_df[characters_df['name'] == selected_character_name].iloc[0]
-    character_id = selected_character['id']
+    # 分析维度选择
+    analysis_type = st.selectbox("分析维度", 
+                                ["角色性格分析", "剧情作用分析", "演技评价", "观众共鸣点", "角色成长轨迹", "演员简介", "代表作品分析", "演艺生涯发展"])
     
-    # 显示角色信息
-    st.markdown("<div class='character-card'>", unsafe_allow_html=True)
-    display_character_info(selected_character)
-    st.markdown("</div>", unsafe_allow_html=True)
+    if st.button("🔮 启动AI分析", type="primary", key="ai_analyze"):
+        with st.spinner('AI正在深度解析角色...'):
+            time.sleep(2)  # 模拟AI分析过程
+            
+            # 根据分析类型生成不同的分析结果
+            if analysis_type == "角色性格分析":
+                analysis_result = f"""
+                **{selected_character}的性格深度解析：**
+                
+                {character_data['mbti_description']}
+                
+                **性格特点：**
+                - **理性思维**：{selected_character}展现出{character_data['mbti_type'][0]}型人格的典型特征
+                - **目标导向**：在复仇计划中表现出极强的执行力和耐心
+                - **情感控制**：能够有效控制情绪，保持冷静思考
+                
+                **性格优势：**
+                - 战略规划能力强
+                - 执行力突出
+                - 情绪管理得当
+                
+                **性格局限：**
+                - 可能过于理性而忽视情感需求
+                - 复仇执念可能影响判断
+                """
+            elif analysis_type == "剧情作用分析":
+                analysis_result = f"""
+                **{selected_character}在剧情中的核心作用：**
+                
+                **角色定位：** {character_data['role']}
+                
+                **剧情推动力：**
+                - 作为{character_data['role']}，{selected_character}是剧情发展的关键驱动力
+                - 与其他角色的互动构成了复杂的人物关系网
+                - 角色的选择和行动直接影响剧情走向
+                
+                **象征意义：**
+                - 代表了社会中的特定群体或现象
+                - 通过角色命运反映社会问题
+                - 展现了人性的复杂性和多面性
+                """
+            elif analysis_type == "演技评价":
+                analysis_result = f"""
+                **{actor_name}饰演{selected_character}的演技评价：**
+                
+                **表演亮点：**
+                - **情感表达**：成功塑造了角色的内心世界
+                - **细节处理**：微表情和肢体语言丰富角色层次
+                - **角色理解**：对角色的理解深入，表演自然真实
+                
+                **突破表现：**
+                - 在{character_data['role']}这一角色类型上有新的突破
+                - 展现了不同于以往作品的表演风格
+                - 成功挑战了复杂的人物性格
+                
+                **观众反馈：**
+                - 获得了{character_data['rating_count']}名观众的认可
+                - 平均评分达到{character_data['avg_rating']}分
+                - 在社交媒体上获得广泛讨论
+                """
+            else:
+                analysis_result = f"""
+                **{selected_character}的{analysis_type}：**
+                
+                这是一个复杂而深刻的角色，在{character_data['role']}这一身份下展现了丰富的人物层次。
+                
+                **关键特点：**
+                - 角色定位清晰，性格鲜明
+                - 在剧情发展中起到重要作用
+                - 演员{actor_name}的表演为角色注入了生命力
+                
+                **观众评价：**
+                - 获得了{character_data['rating_count']}名观众的评分
+                - 平均评分：{character_data['avg_rating']}分
+                - 角色深度和复杂性受到认可
+                """
+            
+            st.success("✅ AI分析完成！")
+            st.markdown(f"### 📋 {analysis_type}报告")
+            st.markdown(analysis_result)
+            
+            # 显示相关图片
+            col_img1, col_img2 = st.columns(2)
+            with col_img1:
+                st.image(character_data['image_url'], caption=f"{selected_character}角色形象", use_column_width=True)
+            with col_img2:
+                st.image(character_data['actor_photo_url'], caption=f"演员{actor_name}", use_column_width=True)
+
+# 演员信息界面
+def actor_info_interface():
+    st.markdown("## 🎭 演员信息")
+    st.markdown("### 🌟 了解演员的演艺生涯和代表作品")
     
-    # 评分区域
-    st.markdown("<div class='rating-section'>", unsafe_allow_html=True)
-    st.markdown("### ⭐ 角色评分")
+    # 演员选择
+    actor_names = list(st.session_state.characters_df['actor_name'].unique())
+    selected_actor = st.selectbox("选择演员", actor_names, key="actor_select")
     
-    # 获取当前评分（如果有）
-    current_rating = st.session_state.character_ratings.get(character_id, 0)
-    
-    # 显示评分组件
-    new_rating = star_rating_component(character_id, current_rating)
-    
-    # 提交评分按钮
-    if st.button("提交评分", key=f"submit_{character_id}"):
-        if new_rating > 0:
-            st.session_state.character_ratings[character_id] = new_rating
-            st.session_state.rating_sessions += 1
-            st.success(f"✅ 已为 {selected_character_name} 评分 {new_rating} 星！")
-            time.sleep(1)
-            st.rerun()
-    
-    st.markdown("</div>", unsafe_allow_html=True)
+    # 获取演员信息
+    actor_data = st.session_state.characters_df[st.session_state.characters_df['actor_name'] == selected_actor].iloc[0]
     
     # 显示演员信息
-    display_actor_info(selected_character)
+    col_actor1, col_actor2 = st.columns([1, 2])
     
-    # 显示梗和热评
-    display_memes_and_comments(character_id)
+    with col_actor1:
+        st.image(actor_data['actor_photo_url'], caption=selected_actor, use_column_width=True)
     
-    # 显示统计信息
-    if st.session_state.rating_sessions > 0:
-        st.markdown("### 📈 评分统计")
-        rated_characters = len(st.session_state.character_ratings)
-        total_sessions = st.session_state.rating_sessions
+    with col_actor2:
+        st.markdown(f"### {selected_actor}")
+        st.markdown(f"**饰演角色：** {actor_data['name']} ({actor_data['role']})")
+        st.markdown(f"**角色描述：** {actor_data['description']}")
+        st.markdown(f"**演员简介：** {actor_data['actor_bio']}")
+    
+    # 代表作品展示
+    st.markdown("### 🎬 代表作品")
+    
+    works = actor_data['famous_works']
+    if len(works) > 0:
+        cols = st.columns(min(3, len(works)))
         
-        col1, col2 = st.columns(2)
-        with col1:
-            st.metric("已评分角色", f"{rated_characters}/8")
-        with col2:
-            st.metric("评分次数", total_sessions)
+        for i, work in enumerate(works):
+            with cols[i % 3]:
+                st.markdown(f'<div class="work-item">{work}</div>', unsafe_allow_html=True)
+                # 显示作品图片（如果有）
+                work_image = get_work_images(work)
+                st.image(work_image, caption=work, use_column_width=True)
+
+# 主程序
+def main():
+    # 初始化数据
+    init_data()
+    
+    # 导航菜单
+    st.sidebar.title("⚔️ 导航菜单")
+    menu_options = ["角色评分", "AI角色分析", "演员信息"]
+    selected_menu = st.sidebar.radio("选择功能", menu_options)
+    
+    # 根据选择显示不同界面
+    if selected_menu == "角色评分":
+        character_rating_interface()
+    elif selected_menu == "AI角色分析":
+        ai_character_analysis()
+    elif selected_menu == "演员信息":
+        actor_info_interface()
+    
+    # 页脚信息
+    st.sidebar.markdown("---")
+    st.sidebar.markdown("### 📊 系统信息")
+    st.sidebar.markdown(f"**评分会话数：** {st.session_state.rating_sessions}")
+    st.sidebar.markdown(f"**已评分角色：** {len(st.session_state.character_ratings)}")
+    st.sidebar.markdown(f"**最后更新：** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    
+    # 关于信息
+    st.sidebar.markdown("---")
+    st.sidebar.markdown("### ℹ️ 关于")
+    st.sidebar.markdown("**黑暗荣耀角色评分系统**")
+    st.sidebar.markdown("基于Streamlit开发的互动评分应用")
+    st.sidebar.markdown("支持角色评分、AI分析和演员信息查看")
 
 if __name__ == "__main__":
     main()
