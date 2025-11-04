@@ -171,12 +171,12 @@ def initialize_characters():
         'avg_rating': [9.3, 9.1, 8.5, 7.9, 8.2, 8.0],
         'rating_count': [16800, 15500, 11200, 8900, 9500, 8200],
         'image_url': [
-            '爱的迫降/尹世理.jpg',
-            '爱的迫降/李正赫.jpg',
-            '爱的迫降/徐丹.jpg',
-            '爱的迫降/具承俊.jpg',
-            '爱的迫降/表治秀.jpg',
-            '爱的迫降/金舟墨.jpeg'
+            'c:/Users/17347/Desktop/人物评分/爱的迫降/尹世理.jpg',
+            'c:/Users/17347/Desktop/人物评分/爱的迫降/李正赫.jpg',
+            'c:/Users/17347/Desktop/人物评分/爱的迫降/徐丹.jpg',
+            'c:/Users/17347/Desktop/人物评分/爱的迫降/具承俊.jpg',
+            'c:/Users/17347/Desktop/人物评分/爱的迫降/表治秀.jpg',
+            'c:/Users/17347/Desktop/人物评分/爱的迫降/金舟墨.jpeg'
         ]
     }
     return pd.DataFrame(characters_data)
@@ -205,37 +205,48 @@ def get_character_memes(character_id):
     comments = comments_dict.get(character_id, [])
     return memes[:3], comments[:2]
 
-# 五星评分系统 - 使用Streamlit原生组件
+# 五星评分系统
 def star_rating_component(character_id, current_rating=0):
-    # 使用Streamlit的selectbox替代复杂的JavaScript交互
-    rating_options = ["未评分", "1星 ⭐", "2星 ⭐⭐", "3星 ⭐⭐⭐", "4星 ⭐⭐⭐⭐", "5星 ⭐⭐⭐⭐⭐"]
+    stars_html = f"""
+    <div class="star-rating" id="stars-{character_id}">
+    """
     
-    # 创建唯一的key
-    rating_key = f"rating_{character_id}"
+    for i in range(1, 6):
+        filled = "🌟" if i <= current_rating else "⚪"
+        star_class = "star" if i <= current_rating else "star empty"
+        stars_html += f'<span class="{star_class}" onclick="setRating({character_id}, {i})">{filled}</span>'
     
-    # 显示当前评分状态
-    if current_rating > 0:
-        st.markdown(f'<div style="text-align: center; background: #4CAF50; color: white; padding: 8px; border-radius: 10px; margin: 10px 0;">您已评分: {current_rating}星</div>', unsafe_allow_html=True)
+    stars_html += f"""
+        <span class="score-highlight" style="margin-left: 15px;">{current_rating}/5</span>
+    </div>
+    <script>
+        function setRating(charId, rating) {{
+            // 更新星星显示
+            const stars = document.querySelectorAll('#stars-' + charId + ' .star');
+            stars.forEach((star, index) => {{
+                if (index < rating) {{
+                    star.textContent = '🌟';
+                    star.classList.remove('empty');
+                }} else {{
+                    star.textContent = '⚪';
+                    star.classList.add('empty');
+                }}
+            }});
+            
+            // 更新评分显示
+            const ratingSpan = document.querySelector('#stars-' + charId + ' span:last-child');
+            ratingSpan.textContent = rating + '/5';
+            
+            // 发送评分到Streamlit
+            window.parent.postMessage({{
+                type: 'streamlit:starRating',
+                data: {{ characterId: charId, rating: rating }}
+            }}, '*');
+        }}
+    </script>
+    """
     
-    # 使用selectbox进行评分
-    selected_rating = st.selectbox(
-        "选择评分",
-        options=rating_options,
-        index=current_rating,
-        key=rating_key
-    )
-    
-    # 解析评分值
-    new_rating = rating_options.index(selected_rating)
-    
-    # 如果评分有变化，更新session state
-    if new_rating != current_rating and new_rating > 0:
-        st.session_state.character_ratings[character_id] = new_rating
-        st.session_state.rating_sessions += 1
-        st.success(f"✅ 已为{st.session_state.characters_df[st.session_state.characters_df['id'] == character_id]['name'].iloc[0]}评分 {new_rating}星")
-        st.rerun()
-    
-    return None
+    return stars_html
 
 # 角色评分界面
 def character_rating_interface():
@@ -299,26 +310,26 @@ def character_rating_interface():
             with st.container():
                 st.markdown(f'<div class="character-card">', unsafe_allow_html=True)
                 
-                # 角色信息布局
+                # 角色信息布局 - 优化图片和评分布局
                 col_a, col_b = st.columns([2, 3])
                 
                 with col_a:
-                    # 角色图片
+                    # 角色图片 - 放大到与评分框等宽
                     st.image(character['image_url'], width='stretch', caption=character['name'])
                     
-                    # 评分显示
+                    # 评分显示 - 与图片宽度对齐
                     st.markdown(f'<div class="score-highlight" style="text-align: center; margin-top: 10px;">评分: {character["avg_rating"]}</div>', 
                                unsafe_allow_html=True)
                     st.markdown(f'<div style="text-align: center; font-size: 0.9rem; color: #666; margin-top: 5px;">👥 {character["rating_count"]}人评分</div>', 
                                unsafe_allow_html=True)
                 
                 with col_b:
-                    # 角色基本信息
+                    # 角色基本信息 - 放大字体
                     st.markdown(f"<h2 style='font-size: 1.8rem; margin-bottom: 10px;'>{character['name']}</h2>", unsafe_allow_html=True)
-                    st.markdown(f"<p style='font-size: 1.2rem; font-weight: bold; color: #1E3C72; margin-bottom: 8px;'>身份: {character['role']}</p>", unsafe_allow_html=True)
+                    st.markdown(f"<p style='font-size: 1.2rem; font-weight: bold; color: #FF6B6B; margin-bottom: 8px;'>身份: {character['role']}</p>", unsafe_allow_html=True)
                     st.markdown(f"<p style='font-size: 1.1rem; line-height: 1.4; margin-bottom: 15px;'>{character['description']}</p>", unsafe_allow_html=True)
                     
-                    # 虎扑式热评和梗
+                    # 虎扑式热评和梗 - 放大字体
                     memes, comments = get_character_memes(character['id'])
                     
                     if memes:
@@ -328,14 +339,20 @@ def character_rating_interface():
                             with meme_cols[i]:
                                 st.markdown(f'<div class="meme-tag" style="font-size: 1rem;">{meme}</div>', unsafe_allow_html=True)
                     
-                    # 五星评分系统
+                    # 五星评分系统 - 优化布局
                     st.markdown("### ⭐ 为角色评分")
                     current_user_rating = st.session_state.character_ratings.get(character['id'], 0)
                     
                     # 创建五星评分组件
-                    star_rating_component(character['id'], current_user_rating)
+                    stars_html = star_rating_component(character['id'], current_user_rating)
+                    components.html(stars_html, height=60)
                     
-                    # 显示热评
+                    # 显示用户评分（如果有）
+                    if current_user_rating > 0:
+                        st.markdown(f'<div style="text-align: center; background: #4CAF50; color: white; padding: 8px; border-radius: 10px; margin: 10px 0;">您已评分: {current_user_rating}星</div>', 
+                                   unsafe_allow_html=True)
+                    
+                    # 显示热评 - 放大字体
                     if comments:
                         st.markdown("<h4 style='font-size: 1.3rem; margin-bottom: 10px;'>💬 虎扑热评</h4>", unsafe_allow_html=True)
                         for comment in comments:
@@ -402,38 +419,86 @@ def character_rating_interface():
             
             st.markdown("<hr style='margin: 15px 0;'>", unsafe_allow_html=True)
 
-# 主函数
+# AI角色分析界面
+def ai_character_analysis():
+    st.markdown("## 🔮 AI角色深度解析")
+    st.markdown("### 💫 让AI帮你分析角色特点和观剧体验")
+    
+    # 角色选择
+    character_names = [char['name'] for _, char in st.session_state.characters_df.iterrows()]
+    selected_character = st.selectbox("选择要分析的角色", character_names, key="ai_character")
+    
+    # 获取角色数据
+    character_data = st.session_state.characters_df[st.session_state.characters_df['name'] == selected_character].iloc[0]
+    
+    # 分析维度选择
+    analysis_type = st.selectbox("分析维度", 
+                                ["角色性格分析", "剧情作用分析", "演技评价", "观众共鸣点", "角色成长轨迹"])
+    
+    if st.button("🔮 启动AI分析", type="primary", key="ai_analyze"):
+        with st.spinner('AI正在深度解析角色...'):
+            time.sleep(2)
+            
+            # 模拟AI分析结果
+            analysis_results = {
+                "角色性格分析": [
+                    f"**{selected_character}**的性格复杂而立体",
+                    "展现了人性的多面性和深度",
+                    "角色动机和行为逻辑清晰合理"
+                ],
+                "剧情作用分析": [
+                    f"**{selected_character}**在剧情中起到关键推动作用",
+                    "与其他角色的互动富有戏剧张力",
+                    "对主题表达有重要贡献"
+                ],
+                "演技评价": [
+                    "演员的表演细腻而富有层次感",
+                    "情感表达真实自然",
+                    "角色塑造深入人心"
+                ],
+                "观众共鸣点": [
+                    "角色经历引发观众强烈共情",
+                    "情感表达真实可信",
+                    "角色命运牵动人心"
+                ],
+                "角色成长轨迹": [
+                    "角色经历了显著的成长和变化",
+                    "性格发展合理且有说服力",
+                    "最终命运与角色设定高度契合"
+                ]
+            }
+            
+            st.success(f"### 🎯 AI对**{selected_character}**的{analysis_type}")
+            
+            for point in analysis_results[analysis_type]:
+                st.info(f"✨ {point}")
+            
+            # 显示角色图片
+            st.image(character_data['image_url'], width=200, caption=selected_character)
+            
+            # 显示评分统计
+            col1, col2, col3 = st.columns(3)
+            with col1:
+                st.metric("当前评分", f"{character_data['avg_rating']}")
+            with col2:
+                st.metric("评分人数", f"{character_data['rating_count']:,}")
+            with col3:
+                user_rating = st.session_state.character_ratings.get(character_data['id'], "未评分")
+                st.metric("我的评分", user_rating)
+
+# 主程序
 def main():
+    # 初始化数据
     init_data()
     
-    # 导航菜单
-    st.sidebar.title("✈️ 爱的迫降")
-    menu_options = ["角色评分", "关于项目"]
-    selected_menu = st.sidebar.selectbox("导航菜单", menu_options)
+    # 标签页导航
+    tab1, tab2 = st.tabs(["👥 角色评分", "🔮 AI分析"])
     
-    if selected_menu == "角色评分":
+    with tab1:
         character_rating_interface()
-    elif selected_menu == "关于项目":
-        st.markdown("## 📖 关于爱的迫降评分系统")
-        st.markdown("""
-        ### 🎬 项目介绍
-        这是一个专门为韩剧《爱的迫降》设计的角色评分系统，采用虎扑风格的界面设计。
-        
-        ### ✨ 主要功能
-        - **角色评分**: 为剧中主要角色进行五星评分
-        - **实时统计**: 显示评分数据和排行榜
-        - **角色热梗**: 展示角色相关的热门梗和评论
-        - **筛选搜索**: 支持按角色类型和评分范围筛选
-        
-        ### 🎯 技术特点
-        - 使用Streamlit框架构建
-        - 响应式设计，支持移动端
-        - 虎扑风格UI界面
-        - 实时数据更新
-        
-        ### 📊 数据来源
-        角色评分数据基于网络公开评分和用户反馈整理。
-        """)
+    
+    with tab2:
+        ai_character_analysis()
 
 if __name__ == "__main__":
     main()
