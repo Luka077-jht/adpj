@@ -171,12 +171,12 @@ def initialize_characters():
         'avg_rating': [9.3, 9.1, 8.5, 7.9, 8.2, 8.0],
         'rating_count': [16800, 15500, 11200, 8900, 9500, 8200],
         'image_url': [
-            'c:/Users/17347/Desktop/人物评分/爱的迫降/尹世理.jpg',
-            'c:/Users/17347/Desktop/人物评分/爱的迫降/李正赫.jpg',
-            'c:/Users/17347/Desktop/人物评分/爱的迫降/徐丹.jpg',
-            'c:/Users/17347/Desktop/人物评分/爱的迫降/具承俊.jpg',
-            'c:/Users/17347/Desktop/人物评分/爱的迫降/表治秀.jpg',
-            'c:/Users/17347/Desktop/人物评分/爱的迫降/金舟墨.jpeg'
+            '爱的迫降/尹世理.jpg',
+            '爱的迫降/李正赫.jpg',
+            '爱的迫降/徐丹.jpg',
+            '爱的迫降/具承俊.jpg',
+            '爱的迫降/表治秀.jpg',
+            '爱的迫降/金舟墨.jpeg'
         ]
     }
     return pd.DataFrame(characters_data)
